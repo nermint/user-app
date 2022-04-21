@@ -1,0 +1,18 @@
+.container-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.wrap-form {
+    width: 500px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 45px 55px;
+}
+.form-inline > div{
+    width: 45%;
+}

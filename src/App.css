@@ -1,13 +1,28 @@
 body {
     background-color: #efefef !important;
-    font-weight: 300 !important; }
+    font-weight: 300 !important;
+}
+
 p {
     color: #b3b3b3;
-    font-weight: 300; }
-  
+    font-weight: 300;
+}
+
 a {
     -webkit-transition: .3s all ease;
     -o-transition: .3s all ease;
-    transition: .3s all ease; }
-a, a:hover {
-      text-decoration: none !important; }
+    transition: .3s all ease;
+}
+
+a,
+a:hover {
+    text-decoration: none !important;
+}
+
+:is(textarea, input[type="text"], input[type="email"], select):focus {
+    box-shadow: none;
+    outline: 0 none;
+}
+textarea{
+    resize: none !important;
+}

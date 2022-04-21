@@ -15,7 +15,7 @@ const Header = () => {
             </form>
 	      <div>
 	        <ul className="navbar-nav m-auto">
-	        	<li className="nav-item active"><a href="#" className="nav-link">Add User</a></li>
+	        	<li className="nav-item active"><Link to={'/add'} className="text-light">Add User</Link></li>
 	        </ul>
 	      </div>
 	    </div>

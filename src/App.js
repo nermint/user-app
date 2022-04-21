@@ -1,8 +1,8 @@
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
-import UserList from './components/UserList';
-import UserUpdate from './components/UserUpdate';
-import Header from './components/Header';
+import UserList from './components/UserList/UserList';
+import UserUpdate from './components/UserUpdate/UserUpdate';
+import Header from './components/Layout/Header';
 
 function App() {
   return (
