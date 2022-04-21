@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './UserUpdate.css';
-import { apiInstance } from '../../api/instance';
+import { apiInstance, localInstance } from '../../api/instance';
 import FormErrors from '../../shared/FormErrors';
+
+const initialState = { firstname: '',lastname:'',email:'',country:'', address: ''};
 
 export const UserUpdate = () => {
   const [countries, setCountries] = useState([]);
-  const [formState, setFormState] = useState({ firstname: '',lastname:'',email:'',country:'', address: ''});
-  const [formErrors, setFormErrors] = useState({ firstname: '',lastname:'',email:'',country:'', address: '' });
+  const [formState, setFormState] = useState(initialState);
+  const [formErrors, setFormErrors] = useState(initialState);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(()=>{
@@ -20,21 +22,38 @@ export const UserUpdate = () => {
   }
 
   const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
+    validateField(event.target);
+    const {name, value} = event.target;
     setFormState({ ...formState, [name]: value });
   };
 
-  const validate = () =>{
+  const checkValue = (value) =>{
+    return value ? '' : 'Field is required';
+  }
 
+  const validateField = ({name, value}) => {
+    setFormErrors({...formErrors, [name]: checkValue(value)});
+  };
+
+  const validate = () =>{
+    const obj = {};
+    for (const [name, value] of Object.entries(formState)) {
+      obj[name] = checkValue(value);
+    }
+    setFormErrors(obj);
+    return !Boolean(Object.values(obj).filter(err => err).length);
   }
 
   const onSubmitForm = (event) => {
-    console.log(event);
     event.preventDefault();
     setSubmitted(true);
-    const isValid = this.validate();
-    console.log('submitting', formState);
+    const isValid = validate();
+    if(isValid){
+      localInstance.post('users',formState).then(res=>{
+        setFormState(initialState);
+        alert('User added');
+      });
+    }
   };
 
   return (
@@ -47,16 +66,18 @@ export const UserUpdate = () => {
           <div className="form-group my-3">
             <label htmlFor="firstname">First Name</label>
             <input type="text" className="form-control mr-2" name='firstname' id="firstname" value={formState.firstname} onChange={handleChange} placeholder="Enter first name" required/>
-            {submitted && <FormErrors control={formState.firstname} name={'First name'}/>}
+            {submitted && <FormErrors message={formErrors.firstname}/>}
           </div>
           <div className="form-group my-3">
             <label htmlFor="lastname">Last Name</label>
             <input type="text" className="form-control ml-2" name='lastname' id="lastname" value={formState.lastname} onChange={handleChange} placeholder="Enter last name" />
+            {submitted && <FormErrors message={formErrors.lastname}/>}
           </div>
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="email">Email address</label>
+          <label htmlFor="email">Email</label>
           <input type="email" className="form-control" name='email' id="email" value={formState.email} onChange={handleChange} placeholder="Enter email" />
+          {submitted && <FormErrors message={formErrors.email}/>}
         </div>
         <div className="form-group mb-3">
           <label htmlFor="country">Country</label>
@@ -67,10 +88,12 @@ export const UserUpdate = () => {
                <option key={item?.name?.common} value={item?.name?.common}>{item?.name?.common}</option>
             ))}
           </select>
+          {submitted && <FormErrors message={formErrors.country}/>}
         </div>
         <div className="form-group mb-3">
           <label htmlFor="country">Address</label>
          <textarea className='form-control' rows="3" name='address' cols="10" value={formState.address} onChange={handleChange} placeholder='Enter your address'></textarea>
+         {submitted && <FormErrors message={formErrors.address}/>}
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>

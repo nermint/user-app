@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "firstname": "narmin",
+      "lastname": "talibova",
+      "email": "talibovaanarmin@gmail.com",
+      "country": "Djibouti",
+      "address": "Tst",
+      "id": 1
+    },
+    {
+      "firstname": "y",
+      "lastname": "v",
+      "email": "talibovaanarmin@gmail.com",
+      "country": "Gambia",
+      "address": "gg",
+      "id": 2
+    },
+    {
+      "firstname": "narmin",
+      "lastname": "talibova",
+      "email": "hhb",
+      "country": "Saudi Arabia",
+      "address": "hbh",
+      "id": 3
+    }
+  ]
+}
