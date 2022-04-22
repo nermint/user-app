@@ -19,6 +19,10 @@ a:hover {
     text-decoration: none !important;
 }
 
+.cursor-pointer{
+    cursor: pointer;
+}
+
 :is(textarea, input[type="text"], input[type="email"], select):focus {
     box-shadow: none;
     outline: 0 none;
