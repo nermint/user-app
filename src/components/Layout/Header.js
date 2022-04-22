@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const Header = () => {
+const Header = ({onChangeInput}) => {
+  const handleChange = (event) =>{
+    onChangeInput(event.target.value);
+  }
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark ftco_navbar bg-primary ftco-navbar-light mb-5">
@@ -11,9 +14,8 @@ const Header = () => {
           <Link to={'/'} className='text-light'>User Application</Link>
           <form action="#" className="searchform order-start">
             <div className="form-group d-flex align-items-center position-relative">
-              <input type="text" className="form-control pl-3" placeholder="Search" />
+              <input type="text" className="form-control pl-3" placeholder="Search by first name" onChange={handleChange}/>
               <FontAwesomeIcon color='gray' size='lg' icon={faSearch} className="position-absolute end-0 px-2"/>
-              {/* <button type="submit" placeholder="" className="form-control search"><span className="fa fa-search"></span></button> */}
             </div>
           </form>
           <div>

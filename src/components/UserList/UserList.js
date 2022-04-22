@@ -5,12 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
-const UserList = () => {
+const UserList = ({searchValue}) => {
     const [users, setUsers] = useState([]);
 
-    const getUsers = () => {
+    const getUsers = (searchValue = '') => {
         localInstance.get('users').then((res) => {
-            setUsers(res.data);
+            // filter by firstname
+            let filtered = searchValue ? res.data.filter(item => item.firstname.includes(searchValue)) : res.data;
+            setUsers(filtered);
         });
     }
 
@@ -21,8 +23,8 @@ const UserList = () => {
     }
 
     useEffect(() => {
-        getUsers();
-    }, []);
+        getUsers(searchValue);
+    }, [searchValue]);
 
     return (
         <div>
