@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./UserUpdate.css";
 import { apiInstance, localInstance } from "../../api/instance";
-import { FormElements } from "../../shared/FormElements";
+import { FormElement } from "../../shared/FormElement";
 import { useParams } from "react-router-dom";
 import { SearchableSelect } from "../../shared/SearchableSelect";
 import { useNavigate } from "react-router-dom";
 
-import FormErrors from '../../shared/FormErrors';
+import FormErrors from "../../shared/FormErrors";
 
 const initialState = {
   firstname: "",
@@ -23,7 +23,7 @@ export const UserUpdate = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const { id } = useParams();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCountries();
@@ -40,29 +40,33 @@ export const UserUpdate = () => {
   };
 
   const getUserById = (id) => {
-    localInstance.get("users/" + id).then((res) => {
+    localInstance.get(`users/${id}`).then((res) => {
       setFormState(res.data);
     });
   };
 
-  const validateField = useCallback(({ name, value }) => {
-    setFormErrors({ ...formErrors, [name]: checkValue(value) });
-  },[formErrors]);
+  const validateField = useCallback(
+    ({ name, value }) => {
+      setFormErrors({ ...formErrors, [name]: checkValue(value) });
+    },
+    [formErrors]
+  );
 
-  const handleChange = useCallback((event) => {
-    validateField(event.target);
-    const { name, value } = event.target;
-    setFormState({ ...formState, [name]: value });
-  },[formState,validateField]);
+  const handleChange = useCallback(
+    (event) => {
+      validateField(event.target);
+      const { name, value } = event.target;
+      setFormState({ ...formState, [name]: value });
+    },
+    [formState, validateField]
+  );
 
-  const handleSelect = (value) =>{
+  const handleSelect = (value) => {
     validateField(value);
-    setFormState({...formState,country: value});
-  }
-
-  const checkValue = (value) => {
-    return value ? "" : "Field is required";
+    setFormState({ ...formState, country: value });
   };
+
+  const checkValue = (value) => value ? "" : "Field is required";
 
   const validate = () => {
     const obj = {};
@@ -97,7 +101,7 @@ export const UserUpdate = () => {
               <h2>{id ? "Edit User" : "Add User"}</h2>
             </div>
             <div className="form-inline d-flex justify-content-between">
-              <FormElements
+              <FormElement
                 type={"input"}
                 inputType={"text"}
                 label={"First Name"}
@@ -108,7 +112,7 @@ export const UserUpdate = () => {
                 apiData={[]}
                 submitted={submitted}
               />
-              <FormElements
+              <FormElement
                 type={"input"}
                 inputType={"text"}
                 label={"Last Name"}
@@ -120,7 +124,7 @@ export const UserUpdate = () => {
                 submitted={submitted}
               />
             </div>
-            <FormElements
+            <FormElement
               type={"input"}
               inputType={"text"}
               label={"Email"}
@@ -131,9 +135,12 @@ export const UserUpdate = () => {
               apiData={[]}
               submitted={submitted}
             />
-            <SearchableSelect onChangeSelect={handleSelect} country={formState.country}/>
-            {submitted && <FormErrors message={formErrors['country']}/>}
-            {/* <FormElements
+            <SearchableSelect
+              onChangeSelect={handleSelect}
+              country={formState.country}
+            />
+            {submitted && <FormErrors message={formErrors["country"]} />}
+            {/* <FormElement
               type={"select"}
               inputType={"text"}
               label={"Country"}
@@ -144,7 +151,7 @@ export const UserUpdate = () => {
               apiData={countries}
               submitted={submitted}
             /> */}
-            <FormElements
+            <FormElement
               type={"textarea"}
               inputType={"text"}
               label={"Address"}

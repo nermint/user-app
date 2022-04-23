@@ -4,14 +4,14 @@
       "firstname": "narmint",
       "lastname": "talibovarrr",
       "email": "example@gmail.com",
-      "country": "Italy",
+      "country": "Poland",
       "address": "address",
       "id": 1
     },
     {
       "firstname": "test",
       "lastname": "test",
-      "email": "talibovaanarmin@gmail.com",
+      "email": "test@example.io",
       "country": "Ecuador",
       "address": "Street",
       "id": 2
@@ -47,14 +47,6 @@
       "country": "Wallis and Futuna",
       "address": "eee",
       "id": 6
-    },
-    {
-      "firstname": "narmin",
-      "lastname": "talibova",
-      "email": "admin+1@example.io",
-      "country": "Netherlands",
-      "address": "eee",
-      "id": 7
     }
   ]
 }
