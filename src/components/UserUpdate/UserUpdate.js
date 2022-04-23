@@ -3,6 +3,10 @@ import "./UserUpdate.css";
 import { apiInstance, localInstance } from "../../api/instance";
 import { FormElements } from "../../shared/FormElements";
 import { useParams } from "react-router-dom";
+import { SearchableSelect } from "../../shared/SearchableSelect";
+import { useNavigate } from "react-router-dom";
+
+import FormErrors from '../../shared/FormErrors';
 
 const initialState = {
   firstname: "",
@@ -19,6 +23,7 @@ export const UserUpdate = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const { id } = useParams();
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     getCountries();
@@ -50,6 +55,11 @@ export const UserUpdate = () => {
     setFormState({ ...formState, [name]: value });
   },[formState,validateField]);
 
+  const handleSelect = (value) =>{
+    validateField(value);
+    setFormState({...formState,country: value});
+  }
+
   const checkValue = (value) => {
     return value ? "" : "Field is required";
   };
@@ -71,9 +81,9 @@ export const UserUpdate = () => {
       let method = id ? "put" : "post";
       let url = id ? "users/" + id : "users";
       localInstance[method](url, formState).then((res) => {
-        if (!id) setFormState(initialState);
         let message = id ? " was updated" : " was added";
         alert("User" + message);
+        navigate("/");
       });
     }
   };
@@ -121,7 +131,9 @@ export const UserUpdate = () => {
               apiData={[]}
               submitted={submitted}
             />
-            <FormElements
+            <SearchableSelect onChangeSelect={handleSelect} country={formState.country}/>
+            {submitted && <FormErrors message={formErrors['country']}/>}
+            {/* <FormElements
               type={"select"}
               inputType={"text"}
               label={"Country"}
@@ -131,7 +143,7 @@ export const UserUpdate = () => {
               handleChange={handleChange}
               apiData={countries}
               submitted={submitted}
-            />
+            /> */}
             <FormElements
               type={"textarea"}
               inputType={"text"}
