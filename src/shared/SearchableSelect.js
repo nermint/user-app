@@ -12,7 +12,6 @@ export const SearchableSelect = ({onChangeSelect, country}) => {
 
   const getCountryByName = (event) =>{
     setSelectedCountry(event.target.value);
-    // onChangeSelect(event.target.value);
     let method = event.target.value ? `name/${event.target.value}` : 'all';
     apiInstance.get(method).then(res=>{
         setCountries(res.data);
@@ -35,11 +34,9 @@ export const SearchableSelect = ({onChangeSelect, country}) => {
           value={selectedCountry}
           onChange={getCountryByName}
         />
-        {/* <ul> */}
         { countries.length ? countries.map((item,i)=>(
             <span key={i} onClick={() => selectCountry(item?.name?.common)}>{item?.name?.common}</span>
         )) : '' }
-        {/* </ul>         */}
       </div>
     </>
   );
